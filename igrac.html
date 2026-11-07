@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Igrač – NK Vrapče</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><img class="crest" src="Slike%20klub/vrapce%20logo.jpg" alt="NK Vrapče grb"> NK VRAPČE</a>
+    <nav>
+      <ul>
+        <li><a href="o-klubu.html">O klubu</a></li>
+        <li><a href="rezultati.html">Rezultati</a></li>
+        <li><a href="momcad.html" class="active">Momčad</a></li>
+        <li><a href="index.html#kontakt">Kontakt</a></li>
+      </ul>
+      <div class="social">
+        <a href="https://www.instagram.com/nk.vrapce.zagreb/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.9.4-3.8.4-3.8s0-1.9-.4-3.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.3 1.400-1.300H17V2.600C16.700 2.600 15.800 2.500 14.800 2.500 12.600 2.500 11 3.900 11 6.400v2.100H8.500V12H11v9.500h3V12h2.500l.5-3.500z"/></svg></a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head" id="head">
+  <div class="wrap">
+    <a class="back" href="momcad.html">← Natrag na momčad</a>
+    <div class="player-head">
+      <img id="photo" class="player-photo" alt="" hidden>
+      <div>
+        <h1 id="name">Igrač</h1>
+        <p id="meta"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" style="padding-top:32px">
+  <div class="wrap" id="detail"></div>
+</section>
+
+<section class="sponsors"><div class="wrap"><small>Technical sponsor</small><img src="Slike%20klub/macron%20sponsor.png" alt="Macron"></div></section>
+
+<footer>
+  <div class="wrap">
+    <b>NK VRAPČE</b> · Zagreb
+  </div>
+</footer>
+
+<script type="module" src="data.js"></script>
+<script type="module">
+const {players,age,fmtDate,photoFor}=window.VRAPCE;
+const id=new URLSearchParams(location.search).get("id");
+const p=players.find(x=>x.id===id);
+const detail=document.getElementById("detail");
+if(!p){
+  document.getElementById("name").textContent="Igrač nije pronađen";
+  detail.innerHTML=`<a class="btn" href="momcad.html">Natrag na momčad</a>`;
+}else{
+  document.title=`${p.name} – NK Vrapče`;
+  document.getElementById("name").textContent=p.name;
+  const src=photoFor(p);
+  if(src){const img=document.getElementById("photo");img.src=src;img.alt=p.name;img.hidden=false;}
+  document.getElementById("meta").textContent=`${p.position} · NK Vrapče · Seniori`;
+  const stat=(v,l)=>`<div class="stat"><b>${v}</b><small>${l}</small></div>`;
+  detail.innerHTML=`
+    <h3 class="sub">Osnovni podaci</h3>
+    <div class="grid two">
+      <div class="card"><table class="kv">
+        <tr><th>Pozicija</th><td>${p.position}</td></tr>
+        <tr><th>Dob</th><td>${age(p.dob)} god.</td></tr>
+        <tr><th>Datum rođenja</th><td>${fmtDate(p.dob)}</td></tr>
+        <tr><th>Mjesto rođenja</th><td>${p.born}</td></tr>
+        <tr><th>Kategorija</th><td>Seniori</td></tr>
+      </table></div>
+    </div>
+    <h3 class="sub">Statistika · sezona 2026/27</h3>
+    <div class="grid stats">
+      ${stat(p.apps,"nastupa")}
+      ${stat(p.goals,"golova")}${stat(p.yellow,"žutih kartona")}${stat(p.red,"crvenih kartona")}
+      ${p.minutes?stat(p.minutes,"odigranih minuta"):""}
+    </div>
+    <p class="note">Nastupi uključuju ligu i kup. Pozicija nije navedena u izvoru, pa su označeni samo vratari.</p>
+    <a class="btn" href="https://semafor.hns.family/igraci/${p.hnsId}/${p.id}/" target="_blank" rel="noopener">Cijeli profil na semaforu</a>`;
+}
+</script>
+</body>
+</html>

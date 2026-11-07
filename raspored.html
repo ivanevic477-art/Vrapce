@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raspored – NK Vrapče</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><img class="crest" src="Slike%20klub/vrapce%20logo.jpg" alt="NK Vrapče grb"> NK VRAPČE</a>
+    <nav>
+      <ul>
+        <li><a href="o-klubu.html">O klubu</a></li>
+        <li><a href="rezultati.html">Rezultati</a></li>
+        <li><a href="momcad.html">Momčad</a></li>
+        <li><a href="index.html#kontakt">Kontakt</a></li>
+      </ul>
+      <div class="social">
+        <a href="https://www.instagram.com/nk.vrapce.zagreb/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.9.4-3.8.4-3.8s0-1.9-.4-3.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.3 1.400-1.300H17V2.600C16.700 2.600 15.800 2.500 14.800 2.500 12.600 2.500 11 3.900 11 6.400v2.100H8.500V12H11v9.500h3V12h2.500l.5-3.500z"/></svg></a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <a class="back" href="index.html">← Natrag na početnu</a>
+    <h1>Raspored utakmica</h1>
+    <p>Treća NL Centar 26/27 · cijeli raspored objavljen na semaforu</p>
+  </div>
+</section>
+
+<section class="tint" style="padding-top:32px">
+  <div class="wrap">
+    <div id="schedule"></div>
+    <p class="note">Raspored obuhvaća kola koja su do sada objavljena (1. – 15. kolo). Ostala kola bit će dodana kad budu objavljena.</p>
+  </div>
+</section>
+
+<section class="sponsors"><div class="wrap"><small>Technical sponsor</small><img src="Slike%20klub/macron%20sponsor.png" alt="Macron"></div></section>
+
+<footer>
+  <div class="wrap">
+    <b>NK VRAPČE</b> · Zagreb
+  </div>
+</footer>
+
+<script type="module" src="data.js"></script>
+<script type="module">
+const {schedule}=window.VRAPCE;
+document.getElementById("schedule").innerHTML=schedule.map(m=>`
+  <div class="match ${m.played?"":"next"}">
+    <span class="date"><b>${m.round}. kolo</b><br>${m.date}</span>
+    <span class="teams">${m.home} – ${m.away}</span>
+    ${m.played?`<span class="score ${m.cls}">${m.score}</span>`:`<span class="time">${m.time}</span>`}
+    <span class="venue">${m.venue}</span>
+  </div>`).join("");
+</script>
+</body>
+</html>
