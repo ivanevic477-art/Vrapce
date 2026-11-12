@@ -64,11 +64,12 @@
 
 <script type="module" src="data.js"></script>
 <script type="module">
-const {results,players}=window.VRAPCE;
+const {results,players,photoFor}=window.VRAPCE;
 document.getElementById("results").innerHTML=results.map(r=>`
   <div class="match"><span class="date">${r.date}</span><span class="teams">${r.home} – ${r.away}</span><span class="score ${r.cls}">${r.score}</span></div>`).join("");
 document.querySelector("#scorers tbody").innerHTML=players.filter(p=>p.goals>0).sort((a,b)=>b.goals-a.goals||a.name.localeCompare(b.name,"hr"))
-  .map(p=>`<tr><td><a href="igrac.html?id=${p.id}">${p.name}</a></td><td>${p.goals}</td></tr>`).join("");
+  .map(p=>{const s=photoFor(p);return `<tr><td><a class="who" href="igrac.html?id=${p.id}">${s?`<img class="avatar sm" src="${s}" alt="">`:""}${p.name}</a></td><td>${p.goals}</td></tr>`;}).join("");
 </script>
+<script type="module" src="tilt.js"></script>
 </body>
 </html>

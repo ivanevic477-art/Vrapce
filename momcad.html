@@ -54,11 +54,13 @@
 
 <script type="module" src="data.js"></script>
 <script type="module">
-const {players,categories,age}=window.VRAPCE;
+const {players,categories,age,photoFor}=window.VRAPCE;
 const tabs=document.getElementById("tabs"), roster=document.getElementById("roster");
 
 function card(p){
-  return `<a class="player ${p.gk?"gk":""}" href="igrac.html?id=${p.id}">${p.name}<small>${p.position} · ${age(p.dob)} god.</small></a>`;
+  const src=photoFor(p);
+  const av=src?`<img class="avatar" src="${src}" alt="" loading="lazy">`:`<span class="avatar ph">${p.name.split(" ").map(w=>w[0]).slice(0,2).join("")}</span>`;
+  return `<a class="player ${p.gk?"gk":""}" href="igrac.html?id=${p.id}">${av}<span class="pinfo">${p.name}<small>${p.position} · ${age(p.dob)} god.</small></span></a>`;
 }
 function show(id){
   history.replaceState(null,"","#"+id);
@@ -81,5 +83,6 @@ tabs.addEventListener("click",e=>{const b=e.target.closest("button"); if(b) show
 const start=location.hash.slice(1);
 show(categories.some(c=>c.id===start)?start:"seniori");
 </script>
+<script type="module" src="tilt.js"></script>
 </body>
 </html>

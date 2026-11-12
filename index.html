@@ -104,5 +104,6 @@ document.querySelector("#league tbody").innerHTML=table.map((r,i)=>{
   return `<tr class="${r[0]==="NK Vrapče"?"me":""}"><td>${i+1}</td><td class="club">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${diff>0?"+":""}${diff}</td><td><b>${r[7]}</b></td></tr>`;
 }).join("");
 </script>
+<script type="module" src="tilt.js"></script>
 </body>
 </html>
